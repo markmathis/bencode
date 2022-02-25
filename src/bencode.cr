@@ -30,7 +30,7 @@ module Bencode
           s.to_s @out
       end
 
-      def encode(h : Hash)
+      def encode(h : Hash(String, _))
           @out << 'd'
           h.keys.sort.each do |k|
               encode k
