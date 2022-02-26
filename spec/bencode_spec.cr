@@ -107,26 +107,26 @@ describe Bencode do
   it "encodes a list of integers" do
     io = IO::Memory.new
     encoder = Bencode::Encoder.new io
-    encoder.encode([1,2,3,4])
+    encoder.encode([1, 2, 3, 4])
     io.to_s.should eq("li1ei2ei3ei4ee")
   end
 
   it "encodes a list of integers and strings" do
     io = IO::Memory.new
     encoder = Bencode::Encoder.new io
-    encoder.encode(["1",2,"3",4,"foo"])
+    encoder.encode(["1", 2, "3", 4, "foo"])
     io.to_s.should eq("l1:1i2e1:3i4e3:fooe")
   end
 
   it "encodes a list of lists of integers" do
     io = IO::Memory.new
     encoder = Bencode::Encoder.new io
-    encoder.encode([[1,2,3,4],[9,8,7,6]])
+    encoder.encode([[1, 2, 3, 4], [9, 8, 7, 6]])
     io.to_s.should eq("lli1ei2ei3ei4eeli9ei8ei7ei6eee")
   end
 
   it "encodes a list using bencode.encode" do
-    s = Bencode.encode([1,2,3])
+    s = Bencode.encode([1, 2, 3])
     s.to_s.should eq("li1ei2ei3ee")
   end
 
@@ -140,38 +140,37 @@ describe Bencode do
   it "encodes a dictionary" do
     io = IO::Memory.new
     encoder = Bencode::Encoder.new io
-    encoder.encode({"spam"=>"eggs","cow"=>"moo"})
+    encoder.encode({"spam" => "eggs", "cow" => "moo"})
     io.to_s.should eq("d3:cow3:moo4:spam4:eggse")
   end
 
   it "encodes a dictionary with list as value" do
     io = IO::Memory.new
     encoder = Bencode::Encoder.new io
-    encoder.encode({"spam"=>["a", "b"]})
+    encoder.encode({"spam" => ["a", "b"]})
     io.to_s.should eq("d4:spaml1:a1:bee")
   end
 
   it "encodes a dictionary from the spec" do
     io = IO::Memory.new
     encoder = Bencode::Encoder.new io
-    encoder.encode({ "publisher" => "bob", "publisher-webpage" => "www.example.com", "publisher.location" => "home" } )
+    encoder.encode({"publisher" => "bob", "publisher-webpage" => "www.example.com", "publisher.location" => "home"})
     io.to_s.should eq("d9:publisher3:bob17:publisher-webpage15:www.example.com18:publisher.location4:homee")
   end
 
   it "encodes a dictionary using bencode.encode" do
-    s = Bencode.encode({"spam"=>"eggs","cow"=>"moo"})
+    s = Bencode.encode({"spam" => "eggs", "cow" => "moo"})
     s.to_s.should eq("d3:cow3:moo4:spam4:eggse")
   end
-
 
   # Decoder
 
   it "raises when decoding empty string" do
-      expect_raises IO::EOFError do
-        input = IO::Memory.new("")
-        decoder = Bencode::Decoder.new(input)
-        decoder.read
-      end
+    expect_raises IO::EOFError do
+      input = IO::Memory.new("")
+      decoder = Bencode::Decoder.new(input)
+      decoder.read
+    end
   end
 
   it "what happen" do
@@ -331,6 +330,6 @@ describe Bencode do
     input = IO::Memory.new("d9:publisher3:bob17:publisher-webpage15:www.example.com18:publisher.location4:homee")
     decoder = Bencode::Decoder.new(input)
     dict = decoder.read_dictionary
-    dict.should eq({ "publisher" => "bob", "publisher-webpage" => "www.example.com", "publisher.location" => "home" } )
+    dict.should eq({"publisher" => "bob", "publisher-webpage" => "www.example.com", "publisher.location" => "home"})
   end
 end

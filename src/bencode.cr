@@ -2,7 +2,7 @@
 module Bencode
   VERSION = "0.1.0"
 
-  alias Type = Bytes|String|Int64|Array(Type)|Hash(String, Type)
+  alias Type = Bytes | String | Int64 | Array(Type) | Hash(String, Type)
 
   class Error < IO::Error
   end
@@ -82,7 +82,7 @@ module Bencode
       c = read_byte
       unless 'i' === c
         hex = "\\u{#{c.to_s(16)}}"
-          raise Error.new("Expecting 'i' when reading integer. Got '#{c.chr}' (#{hex})")
+        raise Error.new("Expecting 'i' when reading integer. Got '#{c.chr}' (#{hex})")
       end
 
       s = read_until('e')
@@ -91,14 +91,13 @@ module Bencode
       raise Error.new("integer cannot start with 0: #{s}") if s.starts_with?("0") && s.size > 1
 
       i = s.to_i64
-
     end
 
     def read_list
       c = read_byte
       unless 'l' === c
         hex = "\\u{#{c.to_s(16)}}"
-          raise Error.new("Expecting 'l' when reading list. Got '#{c.chr}' (#{hex})")
+        raise Error.new("Expecting 'l' when reading list. Got '#{c.chr}' (#{hex})")
       end
 
       result = Array(Type).new
@@ -114,7 +113,7 @@ module Bencode
       c = read_byte
       unless 'd' === c
         hex = "\\u{#{c.to_s(16)}}"
-          raise Error.new("Expecting 'd' when reading dictionary. Got '#{c.chr}' (#{hex})")
+        raise Error.new("Expecting 'd' when reading dictionary. Got '#{c.chr}' (#{hex})")
       end
 
       result = Hash(String, Type).new
@@ -159,7 +158,5 @@ module Bencode
         read_string
       end
     end
-
-
   end
 end
