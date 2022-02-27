@@ -7,3 +7,5 @@ authors:
 crystal: 1.3.2
 
 license: MIT
+
+repository: https://github.com/markmathis/bencode.git
