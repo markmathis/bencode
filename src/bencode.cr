@@ -13,6 +13,15 @@ module Bencode
     io.to_s
   end
 
+  def self.decode(value : String)
+    io = IO::Memory.new value
+    Decoder.new(io).read
+  end
+
+  def self.decode(io : IO)
+    Decoder.new(io).read
+  end
+
   struct Encoder
     def initialize(@out : IO)
     end

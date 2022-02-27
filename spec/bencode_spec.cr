@@ -332,4 +332,15 @@ describe Bencode do
     dict = decoder.read_dictionary
     dict.should eq({"publisher" => "bob", "publisher-webpage" => "www.example.com", "publisher.location" => "home"})
   end
+
+  it "decodes using module method with io argument" do
+    input = IO::Memory.new("i3e")
+    s = Bencode.decode(input)
+    s.should eq(3)
+  end
+
+  it "decodes using module method with string argument" do
+    s = Bencode.decode("4:spam")
+    s.should eq("spam")
+  end
 end
